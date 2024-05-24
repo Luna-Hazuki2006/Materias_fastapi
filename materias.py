@@ -1,17 +1,26 @@
 from fastapi import FastAPI, status, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from datetime import datetime
+
+class Nivel(BaseModel): 
+    ID : str
+    nombre : str
+    descripcion : str | None = None
 
 class Profesor(BaseModel): 
     CEDULA : str
     nombres : str
     apellidos : str
     nacimiento : datetime
-
-class Nivel(BaseModel): 
-    ID : str
-    nombre : str
-    descripcion : str | None = None
+    inicioLaboral : datetime
+    telefono : str
+    direccion : str
+    nivel : Nivel
+    años : int
+    @field_validator('años')
+    def cantidades(cls, años): 
+        if años < 0: raise ValueError('La cantidad de años de trabajo no puede ser negativa')
+        return años
 
 class Materia(BaseModel): 
     ID : str
