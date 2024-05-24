@@ -86,11 +86,12 @@ async def crear_materia(materia : Materia):
 
 @app.put('/materia/{id}', status_code=status.HTTP_202_ACCEPTED)
 async def modificar_materia(id : str, materia : Materia): 
-    for este in materias: 
+    for i in range(len(materias)): 
+        este = materias[i]
         if este.ID == id: 
             if id == materia.ID: 
-                este = materia
-                return este
+                materias[i] = materia
+                return materias[i]
             raise HTTPException(
                 status_code=status.HTTP_406_NOT_ACCEPTABLE, 
                 detail={'mensaje': 'La id de la materia no es la misma a la del parámetro'}
@@ -102,9 +103,10 @@ async def modificar_materia(id : str, materia : Materia):
 
 @app.delete('/materia/{id}', status_code=status.HTTP_202_ACCEPTED)
 async def eliminar_materia(id): 
-    for este in materias: 
-        if este.ID == id: 
-            materias.remove(este)
+    for i in range(len(materias)): 
+        if materias[i].ID == id: 
+            este = materias[i]
+            materias.remove(materias[i])
             return este
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND, 
