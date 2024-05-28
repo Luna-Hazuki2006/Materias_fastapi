@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel, field_validator
 from datetime import datetime
@@ -28,13 +29,13 @@ class Materia(BaseModel):
     contenido : str
     nivel : Nivel
     costo : float
-    profesores : list[Profesor] = []
+    profesores : List[Profesor]
     carga : int
     prerrequisitos : list = []
 
-materias : list[Materia] = []
-profesores : list[Profesor] = []
-niveles : list[Nivel] = []
+materias : List[Materia] = []
+profesores : List[Profesor] = []
+niveles : List[Nivel] = []
 
 app = FastAPI()
 
